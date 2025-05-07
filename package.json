@@ -19,6 +19,7 @@
     "test:e2e:debug": "playwright test --debug"
   },
   "dependencies": {
+    "monaco-editor": "^0.52.2",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "zustand": "^5.0.4"
