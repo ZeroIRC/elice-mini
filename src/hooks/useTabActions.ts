@@ -23,6 +23,8 @@ export const useTabActions = () => {
       const path = file.path
       const newOpenFiles = new Map(state.openFiles)
 
+      newOpenFiles.delete(path)
+
       // 현재 선택된 파일이 닫히는 경우 다른 파일을 선택
       let newSelectedFile = state.selectedFile
       if (state.selectedFile?.path === path) {
