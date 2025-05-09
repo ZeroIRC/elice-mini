@@ -7,6 +7,4 @@ export const useFileStore = create<FileStore>(() => ({
   expandedPaths: new Set(['/']) as Set<string>,
   originalFileName: '',
   selectedFile: null,
-  openFiles: new Map(),
-  isDirty: new Map(),
 }))

@@ -1,6 +1,7 @@
 import { unzipToTree } from '../utils/unzipToTree'
 import { treeToZip } from '../utils/treeToZip'
 import { useFileStore } from '../store/useFileStore'
+import { useEditorStore } from '../store/editorStore'
 
 export const useFileActions = () => {
   const setState = useFileStore.setState
@@ -12,12 +13,17 @@ export const useFileActions = () => {
 
     try {
       const tree = await unzipToTree(file)
+      // 모든 상태 초기화
       setState({
         originalFileName: file.name,
         root: tree[0],
         selectedNode: null,
         expandedPaths: new Set(['/']),
+        selectedFile: null,
       })
+      // 에디터 임시 상태도 초기화
+      useEditorStore.getState().setOpenFiles(new Map())
+      useEditorStore.getState().setSelectedFilePath('')
     } catch (error) {
       console.error('ZIP 파일 처리 중 오류 발생:', error)
       alert('ZIP 파일을 처리하는 중 오류가 발생했습니다.')
