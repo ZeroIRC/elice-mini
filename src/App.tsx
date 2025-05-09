@@ -2,11 +2,15 @@ import { FileTree } from './components/FileTree'
 import { useFileStore } from './store/useFileStore'
 import { useFileActions } from './hooks/useFileActions'
 import { useTreeActions } from './hooks/useTreeActions'
+import { TabBar } from './components/TabBar'
+import { useTabActions } from './hooks/useTabActions'
 
 export default function App() {
-  const { root, selectedNode, expandedPaths } = useFileStore()
+  const { root, selectedNode, expandedPaths, openFiles, selectedFile } =
+    useFileStore()
   const { handleUpload, handleDownload } = useFileActions()
   const { toggleExpand, selectFile } = useTreeActions()
+  const { handleTabClick, handleTabClose } = useTabActions()
 
   return (
     <div className="h-screen flex flex-col">
@@ -55,6 +59,12 @@ export default function App() {
         {/* 오른쪽 영역 */}
         <div className="flex-1 flex flex-col">
           {/* 탭 바 */}
+          <TabBar
+            openFiles={openFiles}
+            activeFile={selectedFile}
+            onTabClick={handleTabClick}
+            onTabClose={handleTabClose}
+          />
 
           {/* Monaco 에디터 영역 */}
           <div className="flex-1 bg-[#1e1e1e]"></div>
