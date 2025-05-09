@@ -4,13 +4,20 @@ import { useFileActions } from './hooks/useFileActions'
 import { useTreeActions } from './hooks/useTreeActions'
 import { TabBar } from './components/TabBar'
 import { useTabActions } from './hooks/useTabActions'
+import { MonacoEditor } from './components/MonacoEditor'
+import { useMonacoEditor } from './hooks/useMonacoEditorActions'
+import { RefObject } from 'react'
+import { useEditorStore } from './store/editorStore'
 
 export default function App() {
-  const { root, selectedNode, expandedPaths, openFiles, selectedFile } =
-    useFileStore()
+  const { root, selectedNode, expandedPaths } = useFileStore()
   const { handleUpload, handleDownload } = useFileActions()
   const { toggleExpand, selectFile } = useTreeActions()
   const { handleTabClick, handleTabClose } = useTabActions()
+  const { editorRef, file, handleSave, handleDownloadFile } = useMonacoEditor()
+  const openFiles = useEditorStore(state => state.openFiles)
+  const selectedFilePath = useEditorStore(state => state.selectedFilePath)
+  const activeFile = openFiles.get(selectedFilePath) || null
 
   return (
     <div className="h-screen flex flex-col">
@@ -61,13 +68,20 @@ export default function App() {
           {/* 탭 바 */}
           <TabBar
             openFiles={openFiles}
-            activeFile={selectedFile}
+            activeFile={activeFile}
             onTabClick={handleTabClick}
             onTabClose={handleTabClose}
           />
 
           {/* Monaco 에디터 영역 */}
-          <div className="flex-1 bg-[#1e1e1e]"></div>
+          <div className="flex-1 bg-[#1e1e1e]">
+            <MonacoEditor
+              file={file}
+              editorRef={editorRef as RefObject<HTMLDivElement>}
+              handleSave={handleSave}
+              handleDownloadFile={handleDownloadFile}
+            />
+          </div>
         </div>
       </div>
     </div>
