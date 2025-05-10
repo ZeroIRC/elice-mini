@@ -5,7 +5,7 @@ import { useTreeActions } from './hooks/useTreeActions'
 import { TabBar } from './components/TabBar'
 import { useTabActions } from './hooks/useTabActions'
 import { MonacoEditor } from './components/MonacoEditor'
-import { useMonacoEditor } from './hooks/useMonacoEditorActions'
+import { useMonacoEditorActions } from './hooks/useMonacoEditorActions'
 import { RefObject } from 'react'
 import { useEditorStore } from './store/editorStore'
 
@@ -14,7 +14,8 @@ export default function App() {
   const { handleUpload, handleDownload } = useFileActions()
   const { toggleExpand, selectFile } = useTreeActions()
   const { handleTabClick, handleTabClose } = useTabActions()
-  const { editorRef, file, handleSave, handleDownloadFile } = useMonacoEditor()
+  const { editorRef, file, handleSave, handleDownloadFile } =
+    useMonacoEditorActions()
   const openFiles = useEditorStore(state => state.openFiles)
   const selectedFilePath = useEditorStore(state => state.selectedFilePath)
   const activeFile = openFiles.get(selectedFilePath) || null

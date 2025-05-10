@@ -4,7 +4,7 @@ import { useFileStore } from '../store/useFileStore'
 import { useEditorStore } from '../store/editorStore'
 import { FileTreeNode } from '../types/FileTreeNode'
 
-export function useMonacoEditor() {
+export function useMonacoEditorActions() {
   const { selectedFile: file } = useFileStore()
   const [model, setModel] = useState<monaco.editor.ITextModel | null>(null)
 
